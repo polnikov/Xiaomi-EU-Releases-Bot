@@ -24,10 +24,6 @@ class DataBase:
                 port=PORT,
                 database=DATABASE
             )
-        except psycopg2.Error as e:
-            logger.error(f'Can`t establish connection to database: {e}')
-
-        try:
             cursor = self.conn.cursor()
             with cursor as curs:
                 curs.execute('''
@@ -42,7 +38,7 @@ class DataBase:
                 ''')
                 self.conn.commit()
         except psycopg2.Error as e:
-            logger.error(f'[DB] {e}')
+            logger.error(f'Can`t establish connection to database: {e}')
 
 
     def check_user(self, user_id):
