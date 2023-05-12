@@ -73,6 +73,7 @@ class DataBase:
                     WHERE user_id=%s AND rom=%s
                 ''', (user_id, rom))
                 row = curs.fetchone()
+            logger.info(f'[DB] OK')
 
             if row:
                 return True
@@ -92,6 +93,7 @@ class DataBase:
                     VALUES (%s, %s, %s, %s, %s)
                 ''', (user_id, chat_id, rom, version, link))
                 self.conn.commit()
+            logger.info(f'[DB] OK')
             return True
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -109,6 +111,7 @@ class DataBase:
                     VALUES (%s, %s, %s)
                 ''', (version, link, user_id, rom))
                 self.conn.commit()
+            logger.info(f'[DB] OK')
             return True
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -124,7 +127,7 @@ class DataBase:
                     WHERE user_id = %s AND rom = %s
                 ''', (user_id, rom))
                 self.conn.commit()
-            logger.info(f'[DB] ROM [{rom}] for USER [{user_id}] was deleted')
+            logger.info(f'[DB] OK')
             return True
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -141,6 +144,7 @@ class DataBase:
                     WHERE user_id = %s
                 ''', (user_id,))
                 result = curs.fetchall()
+            logger.info(f'[DB] OK')
             return result
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -157,6 +161,7 @@ class DataBase:
                     WHERE user_id = %s
                 ''', (user_id,))
                 result = curs.fetchall()
+            logger.info(f'[DB] OK')
             return result
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -172,6 +177,7 @@ class DataBase:
                     WHERE user_id = %s
                 ''', (user_id,))
                 self.conn.commit()
+            logger.info(f'[DB] OK')
             return True
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -187,6 +193,7 @@ class DataBase:
                     FROM users
                 ''')
                 result = curs.fetchall()
+            logger.info(f'[DB] OK')
             return result
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -203,6 +210,7 @@ class DataBase:
                     WHERE user_id=%s
                 ''', (user_id,))
                 result = curs.fetchone()
+            logger.info(f'[DB] OK')
             return result
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -219,6 +227,7 @@ class DataBase:
                     WHERE user_id=%s AND rom=%s
                 ''', (user_id, rom))
                 result = curs.fetchone()
+            logger.info(f'[DB] OK')
             return result
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
