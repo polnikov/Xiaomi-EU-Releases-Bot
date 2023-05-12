@@ -21,13 +21,13 @@ load_dotenv()
 
 TOKEN = os.getenv('TOKEN')
 
+db = DataBase()
+
 
 async def main():
     scheduler = AsyncIOScheduler()
-    db = DataBase()
     bot = Bot(token=TOKEN)
     dp = Dispatcher(storage=MemoryStorage())
-
     dp.include_routers(
         common.router,
         get_data.router,
@@ -95,7 +95,7 @@ async def main():
                             logger.info(f'Send to user {user} success')
         except Exception as e:
             logger.error(f"Can'\t check update: {e}")
-
+    
     scheduler.add_job(check_updates_and_notify, 'interval', days=1)
     scheduler.start()
 
