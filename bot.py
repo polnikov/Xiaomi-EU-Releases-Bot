@@ -100,21 +100,8 @@ async def main():
     scheduler.add_job(check_updates_and_notify, 'interval', days=1)
     scheduler.start()
 
-    DELAY = 30
-    while True:
-        try:
-            logger.info('Bot is running')
-            await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
-        except exceptions.NetworkError as e:
-            logger.error(f"Network error occurred: {e}")
-            asyncio.sleep(DELAY)
-        except exceptions.TerminatedByOtherGetUpdates:
-            logger.error('Bot terminated by other getUpdates request')
-            break
-        except Exception as e:
-            logger.error(f"Exception occurred: {e}")
-            logger.error(traceback.format_exc())
-            asyncio.sleep(DELAY)
+    logger.info('Bot is running')
+    await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 
 if __name__ == '__main__':
     asyncio.run(main())
