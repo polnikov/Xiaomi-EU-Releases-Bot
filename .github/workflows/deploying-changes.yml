@@ -1,0 +1,22 @@
+name: Deploying Changes
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    environment: Deploy changes
+    steps:
+      - name: Deploying changes
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script: |
+            source /home/bot/Xiaomi-EU-Releases-Bot/deploying_changes.sh
