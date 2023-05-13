@@ -61,7 +61,7 @@ async def set_rom(message: Message, state: FSMContext):
         )
     else:
         last_versions = get_list_of_firmwares()
-        last_version_data = list(filter(lambda x: rom in x.get('rom'), last_versions))[0]
+        last_version_data = list(filter(lambda x: rom == x.get('rom'), last_versions))[0]
 
         version = last_version_data['data'][0] if last_version_data['data'][0] else 'Not exist❗'
         version_link = last_version_data['data'][1] if last_version_data['data'][1] else ''

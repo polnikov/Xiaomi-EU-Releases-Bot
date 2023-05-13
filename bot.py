@@ -1,9 +1,11 @@
 import os
 import asyncio
+import redis
 
 from aiogram import Bot, Dispatcher
-from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.fsm.storage.redis import RedisStorage
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from pytz import timezone
 
 from dotenv import load_dotenv
 from logger import logger
@@ -21,8 +23,9 @@ db = DataBase()
 
 
 async def main():
+    r = redis.Redis()
     bot = Bot(token=TOKEN)
-    dp = Dispatcher(storage=MemoryStorage())
+    dp = Dispatcher(storage=RedisStorage(r))
     dp.include_routers(
         common.router,
         get_data.router,
@@ -32,7 +35,14 @@ async def main():
         delete_rom_dialog.router,
     )
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(send_notifications, trigger='interval', days=1, kwargs={'bot': bot})
+    scheduler.add_job(
+        send_notifications,
+        trigger='cron',
+        day_of_week='mon-sun',
+        hour=6,
+        timezone=timezone('Europe/Moscow'),
+        kwargs={'bot': bot}
+    )
     scheduler.start()
 
     logger.info('Bot is running')

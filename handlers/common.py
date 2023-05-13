@@ -19,4 +19,5 @@ async def stop(callback: CallbackQuery, state: FSMContext):
         text=MESSAGE.DIALOGS.WELCOME,
         reply_markup=get_main_kb()
     )
+    await callback.answer()
     await state.clear()

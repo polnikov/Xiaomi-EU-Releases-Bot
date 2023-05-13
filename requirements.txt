@@ -31,6 +31,7 @@ python-fsutil==0.10.0
 python-slugify==8.0.1
 pytz==2023.3
 pytz-deprecation-shim==0.1.0.post0
+redis==4.5.5
 requests==2.30.0
 rfc3986==1.5.0
 six==1.16.0
