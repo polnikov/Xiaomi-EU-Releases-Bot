@@ -37,7 +37,7 @@ async def start(message: Message, state: FSMContext):
         input_text = hbold("Please input your phone\'s model ROM")
         await message.answer(
             parse_mode='HTML',
-            text=f'Hi! I can help you keep track of new Xiaomi.EU Mi UI 14 Stable firmware for your phone.\n{supported_list}\n{input_text}'
+            text=f'Hi! I can help you keep track of new Xiaomi.EU MiUIv14 Stable firmware for your phone.\n{supported_list}\n{input_text}'
         )
         await state.set_state(FirstStep.set_rom)
     else:

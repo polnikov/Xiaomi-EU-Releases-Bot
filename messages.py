@@ -15,7 +15,7 @@ class MESSAGE:
         ALREADY_FOLLOW = 'You are already following this ROM. Try another, please.'
         WRONG = 'Something went wrong 🤔, please try again later'
 
-        HI = "Hi! I can help you keep track of new Xiaomi.EU firmware for your phone. Please input your phone\'s model ROM:"
+        HI = "Hi! I can help you keep track of new Xiaomi.EU MiUIv14 firmware for your phone. Please input your phone\'s model ROM:"
         WELCOME = 'Welcome back! ✌'
 
         NO_ROMS = 'You have no saved ROMs 🤷'
