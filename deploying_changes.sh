@@ -2,7 +2,7 @@
 
 echo '[-------------] Start deploying changes...'
 
-cd /home/bot/Xiaomi-EU-Releases-Bot
+cd /home/ubuntu/bot/Xiaomi-EU-Releases-Bot
 echo "[-------------] Target folder: $(pwd)"
 
 echo "[-------------] Local changes: $(git status)"

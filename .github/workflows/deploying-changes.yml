@@ -19,4 +19,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            source /home/bot/Xiaomi-EU-Releases-Bot/deploying_changes.sh
+            source /home/ubuntu/bot/Xiaomi-EU-Releases-Bot/deploying_changes.sh
