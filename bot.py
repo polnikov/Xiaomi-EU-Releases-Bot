@@ -3,7 +3,7 @@ import asyncio
 import redis
 
 from aiogram import Bot, Dispatcher
-from aiogram.fsm.storage.redis import RedisStorage
+from aiogram.fsm.storage.memory import MemoryStorage
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from pytz import timezone
 
@@ -23,9 +23,8 @@ db = DataBase()
 
 
 async def main():
-    r = redis.Redis()
     bot = Bot(token=TOKEN)
-    dp = Dispatcher(storage=RedisStorage(r))
+    dp = Dispatcher(storage=MemoryStorage())
     dp.include_routers(
         common.router,
         get_data.router,
