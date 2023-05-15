@@ -2,7 +2,7 @@ from aiogram import Router
 from aiogram.filters import Text
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
-from aiogram.utils.markdown import hbold, hlink, underline
+from aiogram.utils.markdown import hbold, hlink
 
 from db import DataBase
 from logger import logger
@@ -21,7 +21,7 @@ async def get_user_info(callback: CallbackQuery, state: FSMContext):
     user_id = callback.from_user.id
 
     user_data = db.get_user_data(user_id)
-    user_data = [f'{hbold(rom[0])} ➙ {hlink(underline(rom[1]), rom[2])}' for rom in user_data]
+    user_data = [f'{hbold(rom[0])} ➙ {hlink(rom[1], rom[2])}🔗' for rom in user_data]
     user_data = '\n'.join(user_data)
     if user_data:
         await callback.message.answer(
