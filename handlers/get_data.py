@@ -21,7 +21,7 @@ async def get_user_info(callback: CallbackQuery, state: FSMContext):
     user_id = callback.from_user.id
 
     user_data = db.get_user_data(user_id)
-    user_data = [f'{hbold(rom[0])} ➙ {hunderline(hlink(rom[1]), rom[2])}' for rom in user_data]
+    user_data = [f'{hbold(rom[0])} ➙ {hlink(hunderline(rom[1]), rom[2])}' for rom in user_data]
     user_data = '\n'.join(user_data)
     if user_data:
         await callback.message.answer(

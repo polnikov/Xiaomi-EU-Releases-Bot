@@ -71,7 +71,7 @@ async def set_rom(message: Message, state: FSMContext):
         if add_to_db:
             await message.answer(
                 parse_mode='HTML',
-                text=f'ROM {hbold(rom)} was successfully added.\nLast version: {hunderline(hlink(version, version_link))}',
+                text=f'ROM {hbold(rom)} was successfully added.\nLast version: {hlink(hunderline(version), version_link)}',
                 reply_markup=get_main_kb(),
             )
             await state.clear()
