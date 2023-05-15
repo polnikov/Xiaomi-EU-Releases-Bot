@@ -3,7 +3,7 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import Message
-from aiogram.utils.markdown import hbold, hlink
+from aiogram.utils.markdown import hbold, hlink, hunderline
 
 from db import DataBase
 from logger import logger
@@ -71,7 +71,7 @@ async def set_rom(message: Message, state: FSMContext):
         if add_to_db:
             await message.answer(
                 parse_mode='HTML',
-                text=f'ROM {hbold(rom)} was successfully added.\nLast version: {hlink(version, version_link)}',
+                text=f'ROM {hbold(rom)} was successfully added.\nLast version: {hunderline(hlink(version, version_link))}',
                 reply_markup=get_main_kb(),
             )
             await state.clear()
