@@ -16,6 +16,8 @@ echo "[-------------] Local changes after clean: $(git status)"
 echo "[-------------] Git pull..."
 git pull
 
+sudo supervisorctl restart bot
+
 if [ $? -ne 0 ]; then
     echo "[!------------] Something went wrong!"
 else
