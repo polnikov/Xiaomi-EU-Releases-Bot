@@ -77,9 +77,9 @@ def get_firmware_amount() -> dict:
     soup = BeautifulSoup(html, 'html.parser')
     value = soup.find('table', {'id': 'files_list'}).find('tfoot').find('td', {'id': 'totals'}).text.split()[1]
     if value:
-        data = {'value': int(value)}
+        data = {"value": int(value)}
     else:
-        data = {'value': 0}
+        data = {"value": 0}
     return data
 
 
