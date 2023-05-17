@@ -22,7 +22,7 @@ class AddRomStep(StatesGroup):
     set_new_rom = State()
 
 
-@router.callback_query(Text(MESSAGE.KB_MAIN.ADD_ROM[1]))
+@router.callback_query(Text('add-rom'))
 async def ask_new_rom(callback: CallbackQuery, state: FSMContext):
     logger.info('[HANDLER] ask_new_rom')
     lang = callback.from_user.language_code.upper()
