@@ -34,7 +34,7 @@ async def show_roms(callback: CallbackQuery, state: FSMContext):
 
     roms = db.get_my_roms(user_id)
     if not roms:
-        text = getattr(MESSAGE, f'MESSAGE.{lang}_NO_ROMS')
+        text = getattr(MESSAGE, f'{lang}_NO_ROMS')
         await callback.message.answer(
             text=text,
             reply_markup=get_main_kb(lang),
@@ -42,7 +42,7 @@ async def show_roms(callback: CallbackQuery, state: FSMContext):
         await state.clear()
     else:
         roms = [rom[0] for rom in roms]
-        text = getattr(MESSAGE, f'MESSAGE.{lang}_CHOOSE')
+        text = getattr(MESSAGE, f'{lang}_CHOOSE')
         await callback.message.answer(
             text=text,
             reply_markup=get_list_kb(roms, 'delete'),
@@ -68,7 +68,7 @@ async def delete_rom(callback: CallbackQuery, state: FSMContext):
         await callback.answer()
         await show_roms(callback, state)
     else:
-        text = getattr(MESSAGE, f'MESSAGE.{lang}_WRONG')
+        text = getattr(MESSAGE, f'{lang}_WRONG')
         await callback.message.answer(
             text=text,
         )

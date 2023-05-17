@@ -47,7 +47,7 @@ async def start(message: Message, state: FSMContext):
         )
         await state.set_state(FirstStep.set_rom)
     else:
-        text = getattr(MESSAGE, f'MESSAGE.{lang}_WELCOME')
+        text = getattr(MESSAGE, f'{lang}_WELCOME')
         await message.answer(
             text=text,
             reply_markup=get_main_kb(lang)
@@ -69,7 +69,7 @@ async def set_rom(message: Message, state: FSMContext):
     rom = message.text.strip().lower()
 
     if not check_rom_support(rom):
-        text = getattr(MESSAGE, f'MESSAGE.{lang}_SORRY')
+        text = getattr(MESSAGE, f'{lang}_SORRY')
         await message.answer(
             text=text,
         )
@@ -90,7 +90,7 @@ async def set_rom(message: Message, state: FSMContext):
             )
             await state.clear()
         else:
-            text = getattr(MESSAGE, f'MESSAGE.{lang}_WRONG')
+            text = getattr(MESSAGE, f'{lang}_WRONG')
             await message.answer(
                 text=text,
             )

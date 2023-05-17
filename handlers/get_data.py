@@ -38,7 +38,7 @@ async def get_user_info(callback: CallbackQuery, state: FSMContext):
         )
         await callback.answer()
     else:
-        text = getattr(MESSAGE, f'MESSAGE.{lang}_NO_ROMS')
+        text = getattr(MESSAGE, f'{lang}_NO_ROMS')
         await callback.message.answer(
             text=text,
             reply_markup=get_main_kb(lang),

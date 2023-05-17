@@ -31,14 +31,14 @@ async def delete_user_data(callback: CallbackQuery, state: FSMContext):
     is_user_data_delete = db.delete_user_data(user_id)
 
     if not user_data:
-        text = getattr(MESSAGE, f'MESSAGE.{lang}_NO_ROMS')
+        text = getattr(MESSAGE, f'{lang}_NO_ROMS')
         await callback.message.answer(
             text=text,
             reply_markup=get_main_kb(lang),
         )
         await callback.answer()
     elif is_user_data_delete:
-        text = getattr(MESSAGE, f'MESSAGE.{lang}_ALL_REMOVED')
+        text = getattr(MESSAGE, f'{lang}_ALL_REMOVED')
         await callback.message.answer(
             text=text,
             reply_markup=get_main_kb(lang),
@@ -46,7 +46,7 @@ async def delete_user_data(callback: CallbackQuery, state: FSMContext):
         await callback.answer()
         await state.clear()
     else:
-        text = getattr(MESSAGE, f'MESSAGE.{lang}_WRONG')
+        text = getattr(MESSAGE, f'{lang}_WRONG')
         await callback.message.answer(
             text=text,
         )

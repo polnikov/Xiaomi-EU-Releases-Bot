@@ -32,7 +32,7 @@ async def ask_new_rom(callback: CallbackQuery, state: FSMContext):
         case _:
             lang = 'EN'
 
-    text = getattr(MESSAGE, f'MESSAGE.{lang}_INPUT_ROM')
+    text = getattr(MESSAGE, f'{lang}_INPUT_ROM')
     await callback.message.answer(
         text=text,
         reply_markup=get_stop_kb(),
@@ -56,13 +56,13 @@ async def set_rom(message: Message, state: FSMContext):
     rom = message.text.strip().lower()
 
     if not check_rom_support(rom):
-        text = getattr(MESSAGE, f'MESSAGE.{lang}_SORRY')
+        text = getattr(MESSAGE, f'{lang}_SORRY')
         await message.answer(
             text=text,
             reply_markup=get_stop_kb(),
         )
     elif db.check_rom_exist(user_id, rom):
-        text = getattr(MESSAGE, f'MESSAGE.{lang}_ALREADY_FOLLOW')
+        text = getattr(MESSAGE, f'{lang}_ALREADY_FOLLOW')
         await message.answer(
             text=text,
             reply_markup=get_stop_kb(),
@@ -84,7 +84,7 @@ async def set_rom(message: Message, state: FSMContext):
             )
             await state.clear()
         else:
-            text = getattr(MESSAGE, f'MESSAGE.{lang}_WRONG')
+            text = getattr(MESSAGE, f'{lang}_WRONG')
             await message.answer(
                 text=text,
             )

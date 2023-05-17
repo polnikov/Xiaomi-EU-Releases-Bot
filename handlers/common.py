@@ -21,7 +21,7 @@ async def stop(callback: CallbackQuery, state: FSMContext):
             lang = 'RU'
         case _:
             lang = 'EN'
-    text = getattr(MESSAGE, f'MESSAGE.{lang}_WELCOME')
+    text = getattr(MESSAGE, f'{lang}_WELCOME')
     await callback.message.answer(
         text=text,
         reply_markup=get_main_kb(lang)
