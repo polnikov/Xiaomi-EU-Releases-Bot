@@ -19,6 +19,12 @@ async def get_user_info(callback: CallbackQuery, state: FSMContext):
     logger.info('[HANDLER] get_user_info')
 
     user_id = callback.from_user.id
+    lang = callback.from_user.language_code.upper()
+    match lang:
+        case 'RU':
+            lang = 'RU'
+        case _:
+            lang = 'EN'
 
     user_data = db.get_user_data(user_id)
     user_data = [f'{hbold(rom[0])} ➙ {hlink(rom[1], rom[2])}🔗' for rom in user_data]
@@ -28,11 +34,12 @@ async def get_user_info(callback: CallbackQuery, state: FSMContext):
             parse_mode='HTML',
             disable_web_page_preview=True,
             text=user_data,
-            reply_markup=get_main_kb(),
+            reply_markup=get_main_kb(lang),
         )
         await callback.answer()
     else:
+        text = getattr(MESSAGE, f'MESSAGE.{lang}_NO_ROMS')
         await callback.message.answer(
-            text=MESSAGE.DIALOGS.NO_ROMS,
-            reply_markup=get_main_kb(),
+            text=text,
+            reply_markup=get_main_kb(lang),
         )

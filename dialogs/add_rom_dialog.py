@@ -25,9 +25,16 @@ class AddRomStep(StatesGroup):
 @router.callback_query(Text(MESSAGE.KB_MAIN.ADD_ROM[1]))
 async def ask_new_rom(callback: CallbackQuery, state: FSMContext):
     logger.info('[HANDLER] ask_new_rom')
+    lang = callback.from_user.language_code.upper()
+    match lang:
+        case 'RU':
+            lang = 'RU'
+        case _:
+            lang = 'EN'
 
+    text = getattr(MESSAGE, f'MESSAGE.{lang}_INPUT_ROM')
     await callback.message.answer(
-        text=MESSAGE.DIALOGS.INPUT_ROM,
+        text=text,
         reply_markup=get_stop_kb(),
     )
     if callback.message.text:
@@ -40,16 +47,24 @@ async def set_rom(message: Message, state: FSMContext):
     logger.info('[HANDLER] set_rom')
     user_id = message.from_user.id
     chat_id = message.chat.id
+    lang = message.from_user.language_code.upper()
+    match lang:
+        case 'RU':
+            lang = 'RU'
+        case _:
+            lang = 'EN'
     rom = message.text.strip().lower()
 
     if not check_rom_support(rom):
+        text = getattr(MESSAGE, f'MESSAGE.{lang}_SORRY')
         await message.answer(
-            text=MESSAGE.DIALOGS.SORRY,
+            text=text,
             reply_markup=get_stop_kb(),
         )
     elif db.check_rom_exist(user_id, rom):
+        text = getattr(MESSAGE, f'MESSAGE.{lang}_ALREADY_FOLLOW')
         await message.answer(
-            text=MESSAGE.DIALOGS.ALREADY_FOLLOW,
+            text=text,
             reply_markup=get_stop_kb(),
         )
     else:
@@ -65,11 +80,12 @@ async def set_rom(message: Message, state: FSMContext):
             await message.answer(
                 parse_mode='HTML',
                 text=f'ROM {hbold(rom)} was successfully added.\nLast version ➙ {hlink(version, version_link)}🔗',
-                reply_markup=get_main_kb(),
+                reply_markup=get_main_kb(lang),
             )
             await state.clear()
         else:
+            text = getattr(MESSAGE, f'MESSAGE.{lang}_WRONG')
             await message.answer(
-                text=MESSAGE.DIALOGS.WRONG
+                text=text,
             )
             await state.clear()

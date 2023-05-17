@@ -13,11 +13,18 @@ router = Router()
 
 @router.callback_query(Text('stop'))
 async def stop(callback: CallbackQuery, state: FSMContext):
-    user = callback.message.from_user.username
+    user = callback.from_user.username
     logger.info(f'User [{user}] canceled the conversation')
+    lang = callback.from_user.language_code.upper()
+    match lang:
+        case 'RU':
+            lang = 'RU'
+        case _:
+            lang = 'EN'
+    text = getattr(MESSAGE, f'MESSAGE.{lang}_WELCOME')
     await callback.message.answer(
-        text=MESSAGE.DIALOGS.WELCOME,
-        reply_markup=get_main_kb()
+        text=text,
+        reply_markup=get_main_kb(lang)
     )
     await callback.answer()
     await state.clear()

@@ -3,7 +3,7 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import Message
-from aiogram.utils.markdown import hbold, hlink, hunderline
+from aiogram.utils.markdown import hbold, hlink
 
 from db import DataBase
 from logger import logger
@@ -26,6 +26,12 @@ async def start(message: Message, state: FSMContext):
     logger.info('[HANDLER] start')
     await state.clear()
     user_id = message.from_user.id
+    lang = message.from_user.language_code.upper()
+    match lang:
+        case 'RU':
+            lang = 'RU'
+        case _:
+            lang = 'EN'
 
     if message.from_user.is_bot:
         logger.error(f'User [{message.from_user.username}] is BOT')
@@ -41,9 +47,10 @@ async def start(message: Message, state: FSMContext):
         )
         await state.set_state(FirstStep.set_rom)
     else:
+        text = getattr(MESSAGE, f'MESSAGE.{lang}_WELCOME')
         await message.answer(
-            text=MESSAGE.DIALOGS.WELCOME,
-            reply_markup=get_main_kb()
+            text=text,
+            reply_markup=get_main_kb(lang)
         )
         await state.clear()
 
@@ -53,11 +60,18 @@ async def set_rom(message: Message, state: FSMContext):
     logger.info('[HANDLER] set_rom')
     user_id = message.from_user.id
     chat_id = message.chat.id
+    lang = message.from_user.language_code.upper()
+    match lang:
+        case 'RU':
+            lang = 'RU'
+        case _:
+            lang = 'EN'
     rom = message.text.strip().lower()
 
     if not check_rom_support(rom):
+        text = getattr(MESSAGE, f'MESSAGE.{lang}_SORRY')
         await message.answer(
-            text=MESSAGE.DIALOGS.SORRY,
+            text=text,
         )
     else:
         last_versions = get_list_of_firmwares()
@@ -72,12 +86,13 @@ async def set_rom(message: Message, state: FSMContext):
             await message.answer(
                 parse_mode='HTML',
                 text=f'ROM {hbold(rom)} was successfully added.\nLast version ➙ {hlink(version, version_link)}🔗',
-                reply_markup=get_main_kb(),
+                reply_markup=get_main_kb(lang),
             )
             await state.clear()
         else:
+            text = getattr(MESSAGE, f'MESSAGE.{lang}_WRONG')
             await message.answer(
-                text=MESSAGE.DIALOGS.WRONG
+                text=text,
             )
             logger.error('[HANDLER] set_rom')
             await state.clear()
