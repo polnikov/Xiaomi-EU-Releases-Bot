@@ -78,9 +78,10 @@ def get_firmware_amount() -> dict:
     value = soup.find('table', {'id': 'files_list'}).find('tfoot').find('td', {'id': 'totals'}).text.split()[1]
     if value:
         data = {"value": int(value)}
+        return data
     else:
         data = {"value": 0}
-    return data
+        return 0
 
 
 def save_firmware_amount(data) -> None:
