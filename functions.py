@@ -73,18 +73,16 @@ def get_list_of_firmwares() -> List[dict]:
 def get_firmware_amount() -> dict:
     response = requests.get(URL)
     html = response.content
-
     soup = BeautifulSoup(html, 'html.parser')
     value = soup.find('table', {'id': 'files_list'}).find('tfoot').find('td', {'id': 'totals'}).text.split()[1]
+    return int(value)
+
+
+def save_firmware_amount(value) -> None:
     if value:
-        data = {"value": int(value)}
-        return data
+        data = {"value": value}
     else:
         data = {"value": 0}
-        return 0
-
-
-def save_firmware_amount(data) -> None:
     with open('firmware_amount.json', 'w') as file:
         json.dump(data, file)
 
