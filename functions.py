@@ -1,6 +1,6 @@
-import json
 import requests
 
+from datetime import datetime
 from typing import List
 from bs4 import BeautifulSoup
 
@@ -70,25 +70,18 @@ def get_list_of_firmwares() -> List[dict]:
     return data
 
 
-def get_firmware_amount() -> dict:
+def check_updates() -> bool:
     response = requests.get(URL)
     html = response.content
     soup = BeautifulSoup(html, 'html.parser')
-    value = soup.find('table', {'id': 'files_list'}).find('tfoot').find('td', {'id': 'totals'}).text.split()[1]
-    return int(value)
+    table = soup.find('table', {'id': 'files_list'}).find('tbody')
+    rows = set(table.find_all('tr'))
 
+    date_format = '%Y-%m-%d'
+    dates = [datetime.strptime(r.find('td').abbr['title'].split()[0], date_format).date() for r in rows]
+    current_date = datetime.now().date()
 
-def save_firmware_amount(value) -> None:
-    if value:
-        data = {"value": value}
+    if current_date in dates:
+        return True
     else:
-        data = {"value": 0}
-    with open('firmware_amount.json', 'w') as file:
-        json.dump(data, file)
-
-
-def read_firmware_amount() -> int:
-    with open('firmware_amount.json', 'r') as file:
-        data = json.load(file)
-    value = data['value']
-    return value
+        return False

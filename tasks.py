@@ -4,7 +4,7 @@ from aiogram import Bot
 from aiogram.utils.markdown import hbold, hlink
 from aiogram import exceptions
 
-from functions import get_list_of_firmwares, get_firmware_amount, save_firmware_amount, read_firmware_amount
+from functions import get_list_of_firmwares, check_updates
 from logger import logger
 from db import DataBase
 
@@ -15,10 +15,7 @@ db = DataBase()
 async def send_notifications(bot: Bot):
     logger.info('[CHECKING UPDATE]')
     try:
-        new_value = get_firmware_amount()
-        old_value = read_firmware_amount()
-        if new_value > old_value:
-            save_firmware_amount(new_value)
+        if check_updates():
             last_versions = get_list_of_firmwares()
             users = db.get_users()
             if users:
