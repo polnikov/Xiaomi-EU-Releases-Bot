@@ -27,7 +27,7 @@ async def send_notifications(bot: Bot):
                     if user_roms:
                         user_roms = list(map(lambda x: x[0], user_roms))
                         for rom in user_roms:
-                            rom_data = list(filter(lambda x: rom in x.get('rom'), last_versions))[0]
+                            rom_data = list(filter(lambda x: rom == x.get('rom'), last_versions))[0]
                             new_version = rom_data['data'][0]
                             new_link = rom_data['data'][1]
 
