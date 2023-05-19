@@ -73,7 +73,7 @@ class DataBase:
                     WHERE user_id=%s AND rom=%s
                 ''', (user_id, rom))
                 row = curs.fetchone()
-            logger.info(f'[DB] OK')
+            logger.info('[DB] OK')
 
             if row:
                 return True
@@ -93,7 +93,7 @@ class DataBase:
                     VALUES (%s, %s, %s, %s, %s)
                 ''', (user_id, chat_id, rom, version, link))
                 self.conn.commit()
-            logger.info(f'[DB] OK')
+            logger.info('[DB] OK')
             return True
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -108,10 +108,9 @@ class DataBase:
                     UPDATE users
                     SET version=%s, link=%s
                     WHERE user_id=%s AND rom=%s
-                    VALUES (%s, %s, %s)
                 ''', (version, link, user_id, rom))
                 self.conn.commit()
-            logger.info(f'[DB] OK')
+            logger.info('[DB] OK')
             return True
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -127,7 +126,7 @@ class DataBase:
                     WHERE user_id = %s AND rom = %s
                 ''', (user_id, rom))
                 self.conn.commit()
-            logger.info(f'[DB] OK')
+            logger.info('[DB] OK')
             return True
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -144,7 +143,7 @@ class DataBase:
                     WHERE user_id = %s
                 ''', (user_id,))
                 result = curs.fetchall()
-            logger.info(f'[DB] OK')
+            logger.info('[DB] OK')
             return result
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -161,7 +160,7 @@ class DataBase:
                     WHERE user_id = %s
                 ''', (user_id,))
                 result = curs.fetchall()
-            logger.info(f'[DB] OK')
+            logger.info('[DB] OK')
             return result
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -177,7 +176,7 @@ class DataBase:
                     WHERE user_id = %s
                 ''', (user_id,))
                 self.conn.commit()
-            logger.info(f'[DB] OK')
+            logger.info('[DB] OK')
             return True
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -186,14 +185,14 @@ class DataBase:
 
     def get_users(self):
         try:
-            logger.info(f'[DB] Getting all users')
+            logger.info('[DB] Getting all users')
             with self.conn.cursor() as curs:
                 curs.execute('''
                     SELECT DISTINCT user_id
                     FROM users
                 ''')
                 result = curs.fetchall()
-            logger.info(f'[DB] OK')
+            logger.info('[DB] OK')
             return result
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -202,7 +201,7 @@ class DataBase:
 
     def get_user_chat_id(self, user_id):
         try:
-            logger.info(f'[DB] Getting all users')
+            logger.info('[DB] Getting user chat_id')
             with self.conn.cursor() as curs:
                 curs.execute('''
                     SELECT chat_id
@@ -210,7 +209,7 @@ class DataBase:
                     WHERE user_id=%s
                 ''', (user_id,))
                 result = curs.fetchone()
-            logger.info(f'[DB] OK')
+            logger.info('[DB] OK')
             return result
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')
@@ -227,7 +226,7 @@ class DataBase:
                     WHERE user_id=%s AND rom=%s
                 ''', (user_id, rom))
                 result = curs.fetchone()
-            logger.info(f'[DB] OK')
+            logger.info('[DB] OK')
             return result
         except psycopg2.Error as e:
             logger.error(f'[DB] {e}')

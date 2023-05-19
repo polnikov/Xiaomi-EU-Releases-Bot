@@ -69,4 +69,4 @@ async def send_notifications(bot: Bot):
                         else:
                             logger.info(f'Send to user {user} success')
     except Exception as e:
-        logger.error(f"Can'\t check update: {e}")
+        logger.error(f"Can't check update: {e}")
