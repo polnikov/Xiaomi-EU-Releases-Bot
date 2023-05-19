@@ -33,14 +33,15 @@ async def main():
         delete_rom_dialog.router,
     )
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(
-        send_notifications,
-        trigger='cron',
-        hour=23,
-        minute=55,
-        timezone=timezone('Europe/Moscow'),
-        kwargs={'bot': bot}
-    )
+    for hour in (17, 23):
+        scheduler.add_job(
+            send_notifications,
+            trigger='cron',
+            hour=hour,
+            minute=55,
+            timezone=timezone('Europe/Moscow'),
+            kwargs={'bot': bot}
+        )
     scheduler.start()
 
     logger.info('Bot is running')
