@@ -44,10 +44,16 @@ async def send_notifications(bot: Bot):
                         version = upd[1]
                         link = upd[2]
                         rom = upd[0]
+                        lang = await bot.get_chat_member(chat_id, user).user.language_code
+                        match lang:
+                            case 'RU':
+                                text = f'📮 Новая прошивка {hlink(version, link)} для {hbold(rom)}'
+                            case _:
+                                text = f'📮 New release {hlink(version, link)} for {hbold(rom)}'
                         try:
                             await bot.send_message(
                                 chat_id=chat_id,
-                                text=f'📮 New release {hlink(version, link)} for {hbold(rom)}',
+                                text=text,
                                 parse_mode='HTML',
                             )
                         except exceptions.BotBlocked:
@@ -59,7 +65,7 @@ async def send_notifications(bot: Bot):
                             await asyncio.sleep(e.timeout)
                             return await bot.send_message(
                                 chat_id=chat_id,
-                                text=f'📮 New release {hlink(version, link)} for {hbold(rom)}',
+                                text=text,
                                 parse_mode='HTML',
                             )
                         except exceptions.UserDeactivated:
